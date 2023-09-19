@@ -4,14 +4,20 @@ import { BsFillPlusSquareFill } from "react-icons/bs";
 import Task from "./Task";
 
 const TodoForm = () => {
-  const [task, setTask] = useState("");
+  const [taskInput, setTaskInput] = useState("");
+  const [todoList, setTodoList] = useState([]);
 
   const taskChange = (e) => {
-    setTask(e.target.value);
+    setTaskInput(e.target.value);
   };
 
   const handleAddTask = () => {
-    console.log("task", task);
+    const id = todoList.length + 1;
+    const newTask = { id: id, title: taskInput };
+    setTodoList([...todoList, newTask]);
+
+    // clear task input
+    setTaskInput("");
   };
 
   return (
@@ -22,6 +28,7 @@ const TodoForm = () => {
           <input
             type="text"
             placeholder="Add task"
+            value={taskInput}
             required
             onChange={taskChange}
           />
@@ -35,9 +42,11 @@ const TodoForm = () => {
           </select>
         </div>
       </form>
-      <div className="task-container">
-        <Task />
-      </div>
+      {todoList.length > 0 ? (
+        <div className="task-container">
+          <Task todoList={todoList} />
+        </div>
+      ) : null}
     </div>
   );
 };
