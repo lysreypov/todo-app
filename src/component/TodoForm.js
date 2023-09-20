@@ -7,10 +7,6 @@ const TodoForm = () => {
   const [taskInput, setTaskInput] = useState("");
   const [todoList, setTodoList] = useState([]);
 
-  const taskChange = (e) => {
-    setTaskInput(e.target.value);
-  };
-
   const handleAddTask = () => {
     const id = todoList.length + 1;
     const newTask = { id: id, title: taskInput };
@@ -18,6 +14,10 @@ const TodoForm = () => {
 
     // clear task input
     setTaskInput("");
+  };
+
+  const updatedToDoList = (updatedToDoList) => {
+    setTodoList(updatedToDoList);
   };
 
   return (
@@ -30,7 +30,7 @@ const TodoForm = () => {
             placeholder="Add task"
             value={taskInput}
             required
-            onChange={taskChange}
+            onChange={(e) => setTaskInput(e.target.value)}
           />
           <BsFillPlusSquareFill className="add-icon" onClick={handleAddTask} />
         </div>
@@ -44,7 +44,7 @@ const TodoForm = () => {
       </form>
       {todoList.length > 0 ? (
         <div className="task-container">
-          <Task todoList={todoList} />
+          <Task todoList={todoList} onDelete={updatedToDoList} />
         </div>
       ) : null}
     </div>
