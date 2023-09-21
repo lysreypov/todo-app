@@ -9,7 +9,7 @@ const TodoForm = () => {
 
   const handleAddTask = () => {
     const id = todoList.length + 1;
-    const newTask = { id: id, title: taskInput };
+    const newTask = { id: id, title: taskInput, completed: false };
     setTodoList([...todoList, newTask]);
 
     // clear task input
@@ -17,6 +17,18 @@ const TodoForm = () => {
   };
 
   const updatedToDoList = (updatedToDoList) => {
+    setTodoList(updatedToDoList);
+  };
+
+  const updateTaskStatus = (taskId) => {
+    const updatedToDoList = todoList.map((task) => {
+      if (task.id === taskId) {
+        task.completed = !task.completed;
+      }
+
+      return task;
+    });
+
     setTodoList(updatedToDoList);
   };
 
@@ -44,7 +56,11 @@ const TodoForm = () => {
       </form>
       {todoList.length > 0 ? (
         <div className="task-container">
-          <Task todoList={todoList} onDelete={updatedToDoList} />
+          <Task
+            todoList={todoList}
+            onDelete={updatedToDoList}
+            completed={updateTaskStatus}
+          />
         </div>
       ) : null}
     </div>

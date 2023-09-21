@@ -12,13 +12,21 @@ const Task = (props) => {
     props.onDelete(updatedToDoList);
   };
 
+  const handleTaskStatus = (id) => {
+    props.completed(id);
+  };
+
   return (
     <>
       {props.todoList.map((task) => (
         <div className="task" key={task.id}>
           <div className="task-name">
-            <input type="checkbox" />
-            <p>{task.title}</p>
+            <input
+              type="checkbox"
+              onClick={() => handleTaskStatus(task.id)}
+              defaultChecked={task.completed}
+            />
+            <p className={task.completed ? "task-done" : ""}>{task.title}</p>
           </div>
           <div className="task-setting">
             <MdDelete
